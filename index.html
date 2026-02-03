@@ -2,40 +2,93 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DK Spinner</title>
+<title>Inventory Demo</title>
 
 <style>
 html, body {
   margin: 0;
-  width: 100%;
   height: 100%;
+  background: #111;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* Main layout */
+#container {
+  display: flex;
+  height: 100%;
+}
+
+/* Left panel */
+#inventory {
+  width: 300px;
+  padding: 20px;
+  background: #1c1c1c;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 18px;
+  border-bottom: 1px solid #333;
+}
+
+/* Center DK */
+#center {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #111;
-  overflow: hidden;
 }
 
 #dk {
-  font-family: Arial, sans-serif;
-  font-size: 200px;
+  font-size: 180px;
   font-weight: bold;
-  color: white;
   animation: spin 3s linear infinite;
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 </style>
 </head>
 
 <body>
-  <div id="dk">DK</div>
+
+<div id="container">
+
+  <!-- LEFT INVENTORY -->
+  <div id="inventory">
+    <div class="item">
+      <span>Banandium Gems</span>
+      <span id="gems">0 / 10</span>
+    </div>
+
+    <div class="item">
+      <span>Common Fossil</span>
+      <span id="common">0 / 10</span>
+    </div>
+
+    <div class="item">
+      <span>Rare Fossil</span>
+      <span id="rare">0 / 10</span>
+    </div>
+
+    <div class="item">
+      <span>Very Rare Fossil</span>
+      <span id="veryrare">0 / 10</span>
+    </div>
+  </div>
+
+  <!-- CENTER -->
+  <div id="center">
+    <div id="dk">DK</div>
+  </div>
+
+</div>
+
 </body>
 </html>
