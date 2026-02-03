@@ -66,6 +66,24 @@ html, body {
   background: green;
   cursor: default;
 }
+
+/* RESET button */
+#resetBtn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: #ff5555;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 20;
+}
+#resetBtn:hover {
+  background: #ff7777;
+}
 </style>
 </head>
 
@@ -84,6 +102,7 @@ html, body {
   <!-- CENTER MAP -->
   <div id="center">
     <img id="map" src="images/map.png">
+    <button id="resetBtn">RESET</button>
   </div>
 
 </div>
@@ -93,31 +112,62 @@ const center = document.getElementById("center");
 const gemCounter = document.getElementById("gems");
 
 /* Spread spots around middle more */
-const spots = [
-  {x: 400, y: 300},
-  {x: 600, y: 300},
-  {x: 500, y: 250},
-  {x: 450, y: 400},
-  {x: 550, y: 380}
+const spotsData = [
+  {id: 0, x: 400, y: 300},
+  {id: 1, x: 600, y: 300},
+  {id: 2, x: 500, y: 250},
+  {id: 3, x: 450, y: 400},
+  {id: 4, x: 550, y: 380}
 ];
 
 let gems = 0;
 
-spots.forEach(s => {
-  const dot = document.createElement("div");
-  dot.className = "spot";
-  dot.style.left = s.x + "px";
-  dot.style.top = s.y + "px";
+// Load clicked spots from localStorage
+let clickedSpots = JSON.parse(localStorage.getItem("clickedSpots")) || [];
 
-  dot.addEventListener("click", () => {
-    if (dot.classList.contains("clicked")) return; // can't click again
-    dot.classList.add("clicked");
-    gems += 1;
-    gemCounter.textContent = `${gems} / 10`;
+function updateCounter() {
+  gemCounter.textContent = `${clickedSpots.length} / 10`;
+}
+
+function drawSpots() {
+  spotsData.forEach(s => {
+    const dot = document.createElement("div");
+    dot.className = "spot";
+    dot.style.left = s.x + "px";
+    dot.style.top = s.y + "px";
+    dot.dataset.id = s.id;
+
+    // If this dot was clicked before, mark as clicked
+    if (clickedSpots.includes(s.id)) {
+      dot.classList.add("clicked");
+    }
+
+    dot.addEventListener("click", () => {
+      if (dot.classList.contains("clicked")) return;
+      dot.classList.add("clicked");
+      clickedSpots.push(s.id);
+      localStorage.setItem("clickedSpots", JSON.stringify(clickedSpots));
+      updateCounter();
+    });
+
+    center.appendChild(dot);
   });
+}
 
-  center.appendChild(dot);
+// RESET button functionality
+document.getElementById("resetBtn").addEventListener("click", () => {
+  clickedSpots = [];
+  localStorage.removeItem("clickedSpots");
+  // Remove all dots and redraw
+  document.querySelectorAll(".spot").forEach(d => d.remove());
+  drawSpots();
+  updateCounter();
 });
+
+// Initial render
+drawSpots();
+updateCounter();
+
 </script>
 
 </body>
