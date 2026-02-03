@@ -35,7 +35,7 @@ html, body {
   border-bottom: 1px solid #333;
 }
 
-/* Center DK */
+/* Center map */
 #center {
   flex: 1;
   display: flex;
@@ -43,15 +43,9 @@ html, body {
   align-items: center;
 }
 
-#dk {
-  font-size: 180px;
-  font-weight: bold;
-  animation: spin 3s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#map {
+  max-width: 90%;
+  max-height: 90%;
 }
 </style>
 </head>
@@ -64,28 +58,28 @@ html, body {
   <div id="inventory">
     <div class="item">
       <span>Banandium Gems</span>
-      <span id="gems">0 / 10</span>
+      <span>0 / 10</span>
     </div>
 
     <div class="item">
       <span>Common Fossil</span>
-      <span id="common">0 / 10</span>
+      <span>0 / 10</span>
     </div>
 
     <div class="item">
       <span>Rare Fossil</span>
-      <span id="rare">0 / 10</span>
+      <span>0 / 10</span>
     </div>
 
     <div class="item">
       <span>Very Rare Fossil</span>
-      <span id="veryrare">0 / 10</span>
+      <span>0 / 10</span>
     </div>
   </div>
 
-  <!-- CENTER -->
+  <!-- CENTER MAP -->
   <div id="center">
-    <div id="dk">DK</div>
+    <img id="map" src="images/map.png">
   </div>
 
 </div>
