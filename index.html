@@ -25,6 +25,7 @@ html, body {
   padding: 20px;
   background: #1c1c1c;
   box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+  z-index: 2;
 }
 
 .item {
@@ -38,6 +39,8 @@ html, body {
 /* Center map */
 #center {
   flex: 1;
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,6 +49,17 @@ html, body {
 #map {
   max-width: 90%;
   max-height: 90%;
+}
+
+/* Red spots */
+.spot {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }
 </style>
 </head>
@@ -56,25 +70,10 @@ html, body {
 
   <!-- LEFT INVENTORY -->
   <div id="inventory">
-    <div class="item">
-      <span>Banandium Gems</span>
-      <span>0 / 10</span>
-    </div>
-
-    <div class="item">
-      <span>Common Fossil</span>
-      <span>0 / 10</span>
-    </div>
-
-    <div class="item">
-      <span>Rare Fossil</span>
-      <span>0 / 10</span>
-    </div>
-
-    <div class="item">
-      <span>Very Rare Fossil</span>
-      <span>0 / 10</span>
-    </div>
+    <div class="item"><span>Banandium Gems</span><span>0 / 10</span></div>
+    <div class="item"><span>Common Fossil</span><span>0 / 10</span></div>
+    <div class="item"><span>Rare Fossil</span><span>0 / 10</span></div>
+    <div class="item"><span>Very Rare Fossil</span><span>0 / 10</span></div>
   </div>
 
   <!-- CENTER MAP -->
@@ -83,6 +82,27 @@ html, body {
   </div>
 
 </div>
+
+<script>
+const center = document.getElementById("center");
+
+/* Predefined spots near middle */
+const spots = [
+  {x: 500, y: 300},
+  {x: 560, y: 350},
+  {x: 450, y: 380},
+  {x: 520, y: 420},
+  {x: 480, y: 340}
+];
+
+spots.forEach(s => {
+  const dot = document.createElement("div");
+  dot.className = "spot";
+  dot.style.left = s.x + "px";
+  dot.style.top = s.y + "px";
+  center.appendChild(dot);
+});
+</script>
 
 </body>
 </html>
